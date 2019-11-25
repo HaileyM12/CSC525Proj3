@@ -5,7 +5,7 @@
  COURSE:                CSC 525
  MODIFIED BY:            N/A
  LAST MODIFIED DATE:    12/08/2019
- DESCRIPTION:           Creating a 3D advertisement for a Christmas event
+ DESCRIPTION:           Creating a 3D advertisement for snowman sales
  NOTE:                  Pollitt96 -
                         Hailey555 -
                         quy123 -
@@ -24,6 +24,8 @@
 #include <GLUT/GLUT.h>                // include GLUT library
 using namespace std;
 //***********************************************************************************
+//text font for billboard
+void* font = GLUT_BITMAP_TIMES_ROMAN_24;
 
 // angle of rotation for the camera direction
 float angle=0.0;
@@ -32,6 +34,13 @@ float lx=0.0f,lz=-1.0f;
 // XZ position of the camera
 float x=0.0f,z=5.0f;
 
+
+void drawPresents() {
+    glColor3f(0.0f, 1.0f, 0.0f);
+    glTranslatef(1.1f, -2.0f, 0.0f);
+    glutSolidCube(0.5);
+}
+
 void drawSnowMan() {
 
     glColor3f(1.0f, 1.0f, 1.0f);
@@ -39,9 +48,13 @@ void drawSnowMan() {
 // Draw Body
     glTranslatef(0.0f ,0.75f, 0.0f);
     glutSolidSphere(0.75f,20,20);
+    
+//Draw Middle
+    glTranslatef(0.0f, 0.90f, 0.0f);
+    glutSolidSphere(0.5f, 20, 20);
 
 // Draw Head
-    glTranslatef(0.0f, 1.0f, 0.0f);
+    glTranslatef(0.0f, 0.7f, 0.0f);
     glutSolidSphere(0.25f,20,20);
 
 // Draw Eyes
@@ -56,6 +69,17 @@ void drawSnowMan() {
 // Draw Nose
     glColor3f(1.0f, 0.5f , 0.5f);
     glutSolidCone(0.08f,0.5f,10,2);
+}
+
+void drawBitmapText(float x, float y, float z, void* font, const char* string)
+{
+    const char* c;
+    glRasterPos3f(x, y, z);
+
+    for (c = string; *c != '\0'; c++)
+    {
+        glutBitmapCharacter(font, *c);
+    }
 }
 
 void renderScene(void) {
@@ -79,15 +103,31 @@ void renderScene(void) {
         glVertex3f( 100.0f, 0.0f,  100.0f);
         glVertex3f( 100.0f, 0.0f, -100.0f);
     glEnd();
-
+    
         // Draw 36 SnowMen
     for(int i = -3; i < 3; i++)
         for(int j=-3; j < 3; j++) {
             glPushMatrix();
             glTranslatef(i*10.0,0,j * 10.0);
             drawSnowMan();
+            drawPresents();
             glPopMatrix();
         }
+    
+    //Draw banner
+    /*glColor3f(0.1f, 1.0f, 0.1f);
+    glTranslatef(-8.0, 10.0, -50.0);
+    glBegin(GL_QUADS);
+        glVertex3f(-20.0f, -3.0f, 0.0f);
+        glVertex3f(-20.0f, 3.0f, 0.0f);
+        glVertex3f(20.0f, 3.0f, 0.0f);
+        glVertex3f(20.0f, -3.0f, 0.0f);
+    glEnd();*/
+    
+    //Write banner text
+    glColor3f(1.0f, 0.0f, 0.0f);
+    drawBitmapText(-10, 10, -25, font, "Welcome to Snowman Fields Forever!");
+    drawBitmapText(-5, 8, -25, font, "All snowmen $10");
 
     glutSwapBuffers();
 }
@@ -126,16 +166,16 @@ exit(0);
 
 void processSpecialKeys(int key, int xx, int yy) {
 
-    float fraction = 0.1f;
+    float fraction = 0.3f;
 
     switch (key) {
         case GLUT_KEY_LEFT :
-            angle -= 0.01f;
+            angle -= 0.03f;
             lx = sin(angle);
             lz = -cos(angle);
             break;
         case GLUT_KEY_RIGHT :
-            angle += 0.01f;
+            angle += 0.03f;
             lx = sin(angle);
             lz = -cos(angle);
             break;
@@ -157,8 +197,8 @@ int main(int argc, char **argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100,100);
-    glutInitWindowSize(320,320);
-    glutCreateWindow("Lighthouse3D - GLUT Tutorial");
+    glutInitWindowSize(500,500);
+    glutCreateWindow("Snowmen For Sale!");
 
     // register callbacks
     glutDisplayFunc(renderScene);
