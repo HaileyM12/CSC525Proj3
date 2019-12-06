@@ -22,7 +22,7 @@
 #define GL_SILENCE_DEPRECATION
 #include <iostream>
 #include <math.h>
-#include <GLUT/GLUT.h>                // include GLUT library
+#include <GL/glut.h>                // include GLUT library
 using namespace std;
 //***********************************************************************************
 //text font for billboard
@@ -38,9 +38,35 @@ float camera_x_position = 0.0f, camera_z_position = 5.0f;
 
 
 void drawPresents() {
-    glColor3f(0.0f, 1.0f, 0.0f);
+    glColor3f(0.0f, 0.5f, 0.05f);
     glTranslatef(1.1f, -1.0f, 0.0f);
     glutSolidCube(0.5);
+
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glutWireCube(0.501);
+	
+	glColor3f(.55, .09, .09);
+	glScalef(1.0, .25, 1.0);
+	glTranslatef(0.0f, 0.75f, 0.0f);
+	glutSolidCube(0.53);
+
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glutWireCube(0.5301);
+
+	glTranslatef(0.0f, -0.75f, 0.0f);
+
+	glColor3f(0.83, 0.69, 0.22);
+
+	glScalef(0.25, 4.0, 1.0);
+	glutSolidCube(0.531);
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glutWireCube(0.53105);
+
+	glScalef(4.0, 1.0, .25);
+	glColor3f(0.83, 0.69, 0.22);
+	glutSolidCube(0.531);
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glutWireCube(0.53105);
 }
 
 void drawSnowman() {
